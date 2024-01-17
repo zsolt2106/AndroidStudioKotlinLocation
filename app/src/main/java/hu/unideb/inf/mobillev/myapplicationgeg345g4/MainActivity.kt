@@ -10,6 +10,7 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var acceleration = 0f
     private var currentAcceleration = 0f
     private var lastAcceleration = 0f
+    var pos1 = ""
 
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -34,8 +36,8 @@ class MainActivity : AppCompatActivity() {
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        Objects.requireNonNull(sensorManager)!!
-            .registerListener(
+        Objects.requireNonNull(sensorManager)
+            ?.registerListener(
                 sensorListener, sensorManager!!
                     .getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL
             )
@@ -74,6 +76,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         task.addOnSuccessListener {
+            pos1 = "${it.latitude}+${it.longitude}"
             if (it != null) {
                 Toast.makeText(
                     applicationContext,
@@ -102,6 +105,7 @@ class MainActivity : AppCompatActivity() {
             // Display a Toast message if
             // acceleration value is over 12
             if (acceleration > 12) {
+                findViewById<TextView>(R.id.tvLL).text = pos1
                 Toast.makeText(applicationContext, "Shake event detected", Toast.LENGTH_SHORT)
                     .show()
             }

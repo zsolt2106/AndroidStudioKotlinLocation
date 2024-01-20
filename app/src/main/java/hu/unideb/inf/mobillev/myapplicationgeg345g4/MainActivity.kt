@@ -106,8 +106,6 @@ class MainActivity : AppCompatActivity() {
             // acceleration value is over 12
             if (acceleration > 12) {
                 findViewById<TextView>(R.id.tvLL).text = pos1
-                Toast.makeText(applicationContext, "Shake event detected", Toast.LENGTH_SHORT)
-                    .show()
             }
         }
 
